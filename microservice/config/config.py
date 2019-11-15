@@ -22,6 +22,9 @@ class ProductionConfig(Config):
     # TODO: add required secret configurations
     ENV='production'
     SECRET_KEY=os.getenv('PROD_SECRET_KEY')
+    DATABASE_NAME=os.getenv('PROD_DATABASE_NAME')
+    DATABASE_USER=os.getenv('PROD_DATABASE_USER')
+    DATABASE_PASSWORD=os.getenv('PROD_DATABASE_PASSWORD')
 
 
 class DevelopmentConfig(Config):
@@ -31,6 +34,9 @@ class DevelopmentConfig(Config):
     ENV='development'
     DEBUG = True
     SECRET_KEY=os.getenv('DEV_SECRET_KEY')
+    DATABASE_NAME=os.getenv('DEV_DATABASE_NAME')
+    DATABASE_USER=os.getenv('DEV_DATABASE_USER')
+    DATABASE_PASSWORD=os.getenv('DEV_DATABASE_PASSWORD')
 
 
 class TestingConfig(Config):
@@ -40,3 +46,6 @@ class TestingConfig(Config):
     ENV='testing'
     TESTING = True
     SECRET_KEY=os.getenv('TEST_SECRET_KEY')
+    DATABASE_NAME=os.getenv('TEST_DATABASE_NAME')
+    DATABASE_USER=os.getenv('TEST_DATABASE_USER')
+    DATABASE_PASSWORD=os.getenv('TEST_DATABASE_PASSWORD')

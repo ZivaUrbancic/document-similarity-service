@@ -1,5 +1,5 @@
 # Embedding Route
-# Routes related to creatiung text embeddings
+# Routes related to creating text embeddings
 
 import sys
 
@@ -13,14 +13,33 @@ from werkzeug.exceptions import abort
 # Initialize the models
 #################################################
 
-# TODO: include the model initialization function
+from ..library.document_similarity import DocumentSimilarity
+from ..library.postgresql import PostgresQL
+
+
+# get model parameters from the .config file
+database_name = app.config['DATABASE NAME']
+database_user = app.config['DATABASE_USER']
+database_password = app.config['DATABASE_PASSWORD']
+
+# get the rest of parameters from the database
+pg = PostgresQL()
+pg.connect(database=database_name, user=database_user, password=database_password)
+
+# TODO: update 'embeddings' to the real database name
+loaded_embedding = pg.execute("""
+        SELECT * FROM embeddings;
+    """)
+
+#initialize
+similator = DocumentSimilarity(loaded_embedding)
 
 #################################################
 # Setup the embeddings blueprint
 #################################################
 
 # TODO: provide an appropriate route name and prefix
-bp = Blueprint('service', __name__, url_prefix='/api/v1/service')
+bp = Blueprint('similarity', __name__, url_prefix='/api/v1/similarity')
 
 
 @bp.route('/', methods=['GET'])
@@ -28,7 +47,7 @@ def index():
     # TODO: provide an appropriate output
     return abort(501)
 
-# TODO: add an appropriate route name
+# TODO: add an appropriate route name                                   # sth like get_closest_documents?
 @bp.route('/second', methods=['GET', 'POST'])
 def second():
     # TODO: assign the appropriate variables

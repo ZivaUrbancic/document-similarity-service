@@ -18,7 +18,15 @@ def create_app(args=None):
         app.config.update(
             HOST=args["host"],
             PORT=args["port"],
-            # TODO: add additional enviroments
+            DOCUMENTS_DATABASE_NAME = args["documents_database_name"],
+            DOCUMENTS_DATABASE_USER = args["documents_database_user"],
+            DOCUMENTS_DATABASE_PASSWORD = args["documents_database_password"],
+            EMBEDDINGS_DATABASE_NAME = args["embeddings_database_name"],
+            EMBEDDINGS_DATABASE_USER = args["embeddings_database_user"],
+            EMBEDDINGS_DATABASE_PASSWORD = args["embeddings_database_password"],
+            SIMILARITIES_DATABASE_NAME = args["similarities_database_name"],
+            SIMILARITIES_DATABASE_USER = args["similarities_database_user"],
+            SIMILARITIES_DATABASE_PASSWORD = args["similarities_database_password"]
         )
 
     # set the service environment

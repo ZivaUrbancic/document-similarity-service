@@ -19,6 +19,18 @@ def register(app):
             }
         })
 
+    @app.errorhandler(401)
+    def bad_request(e):
+        # TODO: possible webpage for error
+        return jsonify({
+            "error": {
+                "message": "401: Bad request. Missing arguments.",
+                "route": request.path,
+                "method": request.method,
+                "error": e.description,
+            }
+        })
+
     @app.errorhandler(404)
     def route_not_found(e):
         # TODO: possible webpage for error

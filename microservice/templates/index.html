@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col title__block">
           <h1 class="title text-center">Microservice</h1>
-          <h5 class="title text-center">Converting text into semantic vectors</h5>
+          <h5 class="title text-center">Computing similarities between document embeddings</h5>
         </div>
       </div>
 
@@ -36,10 +36,10 @@
           </div>
 
           <h3 class="doc doc__section mt-5">
-            Text Embedding REST API
+            Document Comparison REST API
           </h3>
           <p class="information">
-            The Text Embedding REST API allows the user to retrieve the text embeddings of a given text.
+            The Document Comparisson REST API allows the user to compare documents by their embeddings.
           </p>
 
           <h6 class="mt-2">
@@ -56,23 +56,33 @@
                 </th></tr>
               </thead>
               <tbody>
-                <tr class="clickable-row" data-href="#get-create-text-embedding">
+                <tr class="clickable-row" data-href="#get-new-document-embedding">
                   <td><b class="doc">GET</b></td>
-                  <td>/embeddings/create</td>
-                  <td>Create the text embedding</td>
+                  <td>/new_document_embedding</td>
+                  <td>Add similarities between a new document and all the documents already in the database.</td>
                 </tr>
-                <tr class="clickable-row" data-href="#post-create-text-embedding">
+                  <tr class="clickable-row" data-href="#post-new-document-embedding">
                     <td><b class="doc">POST</b></td>
-                    <td>/embeddings/create</td>
-                    <td>Create the text embedding (similar to the GET request)</td>
+                    <td>/new_document_embedding</td>
+                    <td>Add similarities between a new document and all the documents already in the database (similar to the GET request).</td>
+                  </tr>
+                  <tr class="clickable-row" data-href="#get-get-similarities">
+                      <td><b class="doc">GET</b></td>
+                      <td>/get_similarities</td>
+                      <td>For a focus document get most similar documents in the database.</td>
+                  </tr>
+                  <tr class="clickable-row" data-href="#post-get-similarities">
+                      <td><b class="doc">POST</b></td>
+                      <td>/get_similarities</td>
+                      <td>For a focus document get most similar documents in the database (similar to the GET request).</td>
                   </tr>
               </tbody>
             </table>
           </div>
 
-          <a class="anchor" id="get-create-text-embedding"></a>
+          <a class="anchor" id="get-new-document-embedding"></a>
           <h5 class="doc doc__subsection mt-5 mb-3">
-              Create the text embedding
+              Add a new document
           </h5>
 
           <div class="table-responsive">
@@ -86,214 +96,11 @@
               <tbody>
                 <tr>
                   <td><b class="doc">GET</b></td>
-                  <td><b>/embeddings/create</b></td>
+                  <td><b>/new_document_embedding</b></td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
-          <p>Route information</p>
-          <h6 class="mt-2">Query string parameters</h6>
-          <div class="table-responsive">
-            <table class="table table-dashed-borders">
-              <thead>
-                <tr>
-                  <th class="doc doc__query name"></th>
-                  <th class="doc doc__query type"></th>
-                  <th class="doc doc__query title"></th>
-                  <th class="doc doc__query optional"></th>
-                  <th class="doc doc__query description"></th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <tr>
-                  <td><b class="doc">text</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> String
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Query Text
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Optional:</span> false
-                  </td>
-                  <td>
-                    The text for which we wish to retrieve the text embedding.
-                  </td>
-                </tr>
-
-                <tr>
-                  <td><b class="doc">language</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> String
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Text Language
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Optional:</span> true
-                  </td>
-                  <td>
-                    The language of the provided text.
-                  </td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div>
-
-          <h6 class="mt-2">Response body attributes</h6>
-          <div class="table-responsive">
-            <table class="table table-dashed-borders">
-              <thead>
-                <tr>
-                  <th class="doc doc__query name"></th>
-                  <th class="doc doc__query type"></th>
-                  <th class="doc doc__query title"></th>
-                  <th class="doc doc__query optional"></th>
-                  <th class="doc doc__query description"></th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <tr>
-                  <td><b class="doc">language_model</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> String
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Language Model
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Read only:</span> true
-                  </td>
-                  <td>
-                    The language model used to create the text embedding.
-                  </td>
-                </tr>
-
-                <tr>
-                  <td><b class="doc">tokens</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> Array
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Tokens
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Read only:</span> true
-                  </td>
-                  <td>
-                    An array of objects, each representing a non-stopword token of the provided text.
-                  </td>
-                </tr>
-
-                <tr class="no-top-border">
-                  <td colspan="5">
-
-                    <b class="doc">tokens item properties</b>
-
-                    <table class="table table-dashed-borders table--second-level">
-                      <thead>
-                        <tr>
-                          <th class="doc doc__query name"></th>
-                          <th class="doc doc__query type"></th>
-                          <th class="doc doc__query title"></th>
-                          <th class="doc doc__query optional"></th>
-                          <th class="doc doc__query description"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><b class="doc">token</b></td>
-                          <td>
-                            <span class="doc doc--small">Type:</span> String
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Title:</span> Token Name
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Read only:</span> true
-                          </td>
-                          <td>
-                            The non-stopword token name.
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td><b class="doc">count</b></td>
-                          <td>
-                            <span class="doc doc--small">Type:</span> Integer
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Title:</span> Token Count
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Read only:</span> true
-                          </td>
-                          <td>
-                              The frequency of the token in the original text.
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                  </td>
-                </tr>
-
-                <tr>
-                  <td><b class="doc">embedding</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> Array
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Text Embedding
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Read only:</span> true
-                  </td>
-                  <td>
-                    An array of floats representing the text embedding.
-                  </td>
-                </tr>
-
-                <tr>
-                  <td><b class="doc">text</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> Array
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Source Text
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Read only:</span> true
-                  </td>
-                  <td>
-                    The original source text.
-                  </td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div>
-
-          <a class="anchor" id="post-create-text-embedding"></a>
-          <h5 class="doc doc__subsection mt-5 mb-3">
-              Create the text embedding
-          </h5>
-
-          <div class="table-responsive">
-            <table class="table table-borderless">
-              <thead>
-                <tr>
-                  <th class="doc doc__method request">
-                  </th><th class="doc doc__method route">
-                </th></tr>
-              </thead>
-              <tbody>
                 <tr>
                   <td><b class="doc">POST</b></td>
-                  <td><b>/embeddings/create</b></td>
+                  <td><b>/new_document_embedding</b></td>
                 </tr>
               </tbody>
             </table>
@@ -314,34 +121,18 @@
               <tbody>
 
                 <tr>
-                  <td><b class="doc">text</b></td>
+                  <td><b class="doc">document_id</b></td>
                   <td>
-                    <span class="doc doc--small">Type:</span> String
+                    <span class="doc doc--small">Type:</span> Integer
                   </td>
                   <td>
-                    <span class="doc doc--small">Title:</span> Query Text
+                    <span class="doc doc--small">Title:</span> Document ID
                   </td>
                   <td>
                     <span class="doc doc--small">Optional:</span> false
                   </td>
                   <td>
-                    The text for which we wish to retrieve the text embedding.
-                  </td>
-                </tr>
-
-                <tr>
-                  <td><b class="doc">language</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> String
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Text Language
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Optional:</span> true
-                  </td>
-                  <td>
-                    The language of the provided text.
+                    The ID of the new document in the database of documents.
                   </td>
                 </tr>
 
@@ -364,127 +155,555 @@
               <tbody>
 
                 <tr>
-                  <td><b class="doc">language_model</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> String
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Language Model
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Read only:</span> true
-                  </td>
-                  <td>
-                    The language model used to create the text embedding.
-                  </td>
-                </tr>
-
-                <tr>
-                  <td><b class="doc">tokens</b></td>
+                  <td><b class="doc">additional_similarities</b></td>
                   <td>
                     <span class="doc doc--small">Type:</span> Array
                   </td>
                   <td>
-                    <span class="doc doc--small">Title:</span> Tokens
+                    <span class="doc doc--small">Title:</span> Similarities
                   </td>
                   <td>
                     <span class="doc doc--small">Read only:</span> true
                   </td>
                   <td>
-                    An array of objects, each representing a non-stopword token of the provided text.
-                  </td>
-                </tr>
-
-                <tr class="no-top-border">
-                  <td colspan="5">
-
-                    <b class="doc">tokens object properties</b>
-
-                    <table class="table table-dashed-borders table--second-level">
-                      <thead>
-                        <tr>
-                          <th class="doc doc__query name"></th>
-                          <th class="doc doc__query type"></th>
-                          <th class="doc doc__query title"></th>
-                          <th class="doc doc__query optional"></th>
-                          <th class="doc doc__query description"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><b class="doc">token</b></td>
-                          <td>
-                            <span class="doc doc--small">Type:</span> String
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Title:</span> Token Name
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Read only:</span> true
-                          </td>
-                          <td>
-                            The non-stopword token name.
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td><b class="doc">count</b></td>
-                          <td>
-                            <span class="doc doc--small">Type:</span> Integer
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Title:</span> Token Count
-                          </td>
-                          <td>
-                            <span class="doc doc--small">Read only:</span> true
-                          </td>
-                          <td>
-                              The frequency of the token in the original text.
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-
+                   A matrix of similarities between the new document and all the documents in the database with known embeddings.
                   </td>
                 </tr>
 
                 <tr>
-                  <td><b class="doc">embedding</b></td>
+                  <td><b class="doc">finish</b></td>
                   <td>
-                    <span class="doc doc--small">Type:</span> Array
+                    <span class="doc doc--small">Type:</span> Boolean
                   </td>
                   <td>
-                    <span class="doc doc--small">Title:</span> Text Embedding
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Read only:</span> true
-                  </td>
-                  <td>
-                    An array of floats representing the text embedding.
-                  </td>
-                </tr>
-
-                <tr>
-                  <td><b class="doc">text</b></td>
-                  <td>
-                    <span class="doc doc--small">Type:</span> Array
-                  </td>
-                  <td>
-                    <span class="doc doc--small">Title:</span> Source Text
+                    <span class="doc doc--small">Title:</span> Finish
                   </td>
                   <td>
                     <span class="doc doc--small">Read only:</span> true
                   </td>
                   <td>
-                    The original source text.
+                    "True" if the process ended successfully and "False" otherwise.
                   </td>
                 </tr>
-
               </tbody>
             </table>
-          </div>
+<!--
+            <a class="anchor" id="post-new-document-embedding"></a>
+              <h5 class="doc doc__subsection mt-5 mb-3">
+                  Add a new document
+              </h5>
 
-        </div>
+              <div class="table-responsive">
+                  <table class="table table-borderless">
+                      <thead>
+                          <tr>
+                              <th class="doc doc__method request">
+                              </th>
+                              <th class="doc doc__method route">
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td><b class="doc">POST</b></td>
+                              <td><b>/new_document_embedding</b></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <p>Route information</p>
+              <h6 class="mt-2">Query string parameters</h6>
+              <div class="table-responsive">
+                  <table class="table table-dashed-borders">
+                      <thead>
+                          <tr>
+                              <th class="doc doc__query name"></th>
+                              <th class="doc doc__query type"></th>
+                              <th class="doc doc__query title"></th>
+                              <th class="doc doc__query optional"></th>
+                              <th class="doc doc__query description"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                              <td><b class="doc">document_id</b></td>
+                              <td>
+                                  <span class="doc doc--small">Type:</span> Integer
+                              </td>
+                              <td>
+                                  <span class="doc doc--small">Title:</span> Document ID
+                              </td>
+                              <td>
+                                  <span class="doc doc--small">Optional:</span> false
+                              </td>
+                              <td>
+                                  The ID of the new document in the database of documents.
+                              </td>
+                          </tr>
+
+                      </tbody>
+                  </table>
+              </div>
+
+              <h6 class="mt-2">Response body attributes</h6>
+              <div class="table-responsive">
+                  <table class="table table-dashed-borders">
+                      <thead>
+                          <tr>
+                              <th class="doc doc__query name"></th>
+                              <th class="doc doc__query type"></th>
+                              <th class="doc doc__query title"></th>
+                              <th class="doc doc__query optional"></th>
+                              <th class="doc doc__query description"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                              <td><b class="doc">additional_similarities</b></td>
+                              <td>
+                                  <span class="doc doc--small">Type:</span> Array
+                              </td>
+                              <td>
+                                  <span class="doc doc--small">Title:</span> Similarities
+                              </td>
+                              <td>
+                                  <span class="doc doc--small">Read only:</span> true
+                              </td>
+                              <td>
+                                  A matrix of similarities between the new document and all the documents in the database with known embeddings.
+                              </td>
+                          </tr>
+
+                          <tr>
+                              <td><b class="doc">finish</b></td>
+                              <td>
+                                  <span class="doc doc--small">Type:</span> Boolean
+                              </td>
+                              <td>
+                                  <span class="doc doc--small">Title:</span> Finish
+                              </td>
+                              <td>
+                                  <span class="doc doc--small">Read only:</span> true
+                              </td>
+                              <td>
+                                  "True" if the process ended successfully and "False" otherwise.
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+-->
+
+                  <a class="anchor" id="get-get-similarities"></a>
+                  <h5 class="doc doc__subsection mt-5 mb-3">
+                      Get similaritiy scores
+                  </h5>
+
+                  <div class="table-responsive">
+                      <table class="table table-borderless">
+                          <thead>
+                              <tr>
+                                  <th class="doc doc__method request">
+                                  </th>
+                                  <th class="doc doc__method route">
+                                  </th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td><b class="doc">GET</b></td>
+                                  <td><b>/get_similarities</b></td>
+                              </tr>
+                              <tr>
+                                  <td><b class="doc">POST</b></td>
+                                  <td><b>/get_similarities</b></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  <p>Route information</p>
+                  <h6 class="mt-2">Query string parameters</h6>
+                  <div class="table-responsive">
+                      <table class="table table-dashed-borders">
+                          <thead>
+                              <tr>
+                                  <th class="doc doc__query name"></th>
+                                  <th class="doc doc__query type"></th>
+                                  <th class="doc doc__query title"></th>
+                                  <th class="doc doc__query optional"></th>
+                                  <th class="doc doc__query description"></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+
+                              <tr>
+                                  <td><b class="doc">document_id</b></td>
+                                  <td>
+                                      <span class="doc doc--small">Type:</span> Integer
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Title:</span> Document ID
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Optional:</span> false
+                                  </td>
+                                  <td>
+                                      The ID of the focus document in the database.
+                                  </td>
+                              </tr>
+
+                              <tr>
+                                  <td><b class="doc">k</b></td>
+                                  <td>
+                                      <span class="doc doc--small">Type:</span> Integer
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Title:</span> Quantity
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Optional:</span> true
+                                  </td>
+                                  <td>
+                                      The number of most similar documents we wish to retrieve.
+                                  </td>
+                              </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+
+                  <h6 class="mt-2">Response body attributes</h6>
+                  <div class="table-responsive">
+                      <table class="table table-dashed-borders">
+                          <thead>
+                              <tr>
+                                  <th class="doc doc__query name"></th>
+                                  <th class="doc doc__query type"></th>
+                                  <th class="doc doc__query title"></th>
+                                  <th class="doc doc__query optional"></th>
+                                  <th class="doc doc__query description"></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+
+                              <tr>
+                                  <td><b class="doc">similar_documents</b></td>
+                                  <td>
+                                      <span class="doc doc--small">Type:</span> Array
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Title:</span> Similar documents
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Read only:</span> true
+                                  </td>
+                                  <td>
+                                      The IDs of documents in the database that are most similar to the focus one.
+                                  </td>
+                              </tr>
+
+                              <tr class="no-top-border">
+                                  <td colspan="5">
+
+                                      <b class="doc">tokens object properties</b>
+
+                                      <table class="table table-dashed-borders table--second-level">
+                                          <thead>
+                                              <tr>
+                                                  <th class="doc doc__query name"></th>
+                                                  <th class="doc doc__query type"></th>
+                                                  <th class="doc doc__query title"></th>
+                                                  <th class="doc doc__query optional"></th>
+                                                  <th class="doc doc__query description"></th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr>
+                                                  <td><b class="doc">doc1_id</b></td>
+                                                  <td>
+                                                      <span class="doc doc--small">Type:</span> Integer
+                                                  </td>
+                                                  <td>
+                                                      <span class="doc doc--small">Title:</span> 1st document ID 
+                                                  </td>
+                                                  <td>
+                                                      <span class="doc doc--small">Read only:</span> true
+                                                  </td>
+                                                  <td>
+                                                      The ID of one of the documents.
+                                                  </td>
+                                              </tr>
+
+                                              <tr>
+                                                  <td><b class="doc">doc2_id</b></td>
+                                                  <td>
+                                                      <span class="doc doc--small">Type:</span> Integer
+                                                  </td>
+                                                  <td>
+                                                      <span class="doc doc--small">Title:</span> 2nd document ID
+                                                  </td>
+                                                  <td>
+                                                      <span class="doc doc--small">Read only:</span> true
+                                                  </td>
+                                                  <td>
+                                                      The ID of one of the documents.
+                                                  </td>
+                                              </tr>
+
+                                              <tr>
+                                                  <td><b class="doc">similarity</b></td>
+                                                  <td>
+                                                      <span class="doc doc--small">Type:</span> Float
+                                                  </td>
+                                                  <td>
+                                                      <span class="doc doc--small">Title:</span> Similarity
+                                                  </td>
+                                                  <td>
+                                                      <span class="doc doc--small">Read only:</span> true
+                                                  </td>
+                                                  <td>
+                                                      The similarity score between documents with IDs "doc1_id" and "doc2_id".
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+
+                                  </td>
+                              </tr>
+
+                              <tr>
+                                  <td><b class="doc">finish</b></td>
+                                  <td>
+                                      <span class="doc doc--small">Type:</span> Boolean
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Title:</span> Finish
+                                  </td>
+                                  <td>
+                                      <span class="doc doc--small">Read only:</span> true
+                                  </td>
+                                  <td>
+                                      "True" if the proccess ended successfully and "False" otherwise.
+                                  </td>
+                              </tr>
+
+                          </tbody>
+                      </table>
+
+<!--
+                      <a class="anchor" id="post-get-similarities"></a>
+                      <h5 class="doc doc__subsection mt-5 mb-3">
+                          Get similaritiy scores
+                      </h5>
+
+                      <div class="table-responsive">
+                          <table class="table table-borderless">
+                              <thead>
+                                  <tr>
+                                      <th class="doc doc__method request">
+                                      </th>
+                                      <th class="doc doc__method route">
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td><b class="doc">POST</b></td>
+                                      <td><b>/get_similarities</b></td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                      <p>Route information</p>
+                      <h6 class="mt-2">Query string parameters</h6>
+                      <div class="table-responsive">
+                          <table class="table table-dashed-borders">
+                              <thead>
+                                  <tr>
+                                      <th class="doc doc__query name"></th>
+                                      <th class="doc doc__query type"></th>
+                                      <th class="doc doc__query title"></th>
+                                      <th class="doc doc__query optional"></th>
+                                      <th class="doc doc__query description"></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+
+                                  <tr>
+                                      <td><b class="doc">document_id</b></td>
+                                      <td>
+                                          <span class="doc doc--small">Type:</span> Integer
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Title:</span> Document ID
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Optional:</span> false
+                                      </td>
+                                      <td>
+                                          The ID of the focus document in the database.
+                                      </td>
+                                  </tr>
+
+                                  <tr>
+                                      <td><b class="doc">k</b></td>
+                                      <td>
+                                          <span class="doc doc--small">Type:</span> Integer
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Title:</span> Quantity
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Optional:</span> true
+                                      </td>
+                                      <td>
+                                          The number of most similar documents we wish to retrieve.
+                                      </td>
+                                  </tr>
+
+                              </tbody>
+                          </table>
+                      </div>
+
+                      <h6 class="mt-2">Response body attributes</h6>
+                      <div class="table-responsive">
+                          <table class="table table-dashed-borders">
+                              <thead>
+                                  <tr>
+                                      <th class="doc doc__query name"></th>
+                                      <th class="doc doc__query type"></th>
+                                      <th class="doc doc__query title"></th>
+                                      <th class="doc doc__query optional"></th>
+                                      <th class="doc doc__query description"></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+
+                                  <tr>
+                                      <td><b class="doc">similar_documents</b></td>
+                                      <td>
+                                          <span class="doc doc--small">Type:</span> Array
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Title:</span> Similar documents
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Read only:</span> true
+                                      </td>
+                                      <td>
+                                          The IDs of documents in the database that are most similar to the focus one.
+                                      </td>
+                                  </tr>
+
+                                  <tr>
+                                      <td><b class="doc">finish</b></td>
+                                      <td>
+                                          <span class="doc doc--small">Type:</span> Boolean
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Title:</span> Finish
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Read only:</span> true
+                                      </td>
+                                      <td>
+                                          "True" if the proccess ended successfully and "False" otherwise.
+                                      </td>
+                                  </tr>
+-->
+                                  <!--
+                <tr class="no-top-border">
+                    <td colspan="5">
+
+                        <b class="doc">tokens object properties</b>
+
+                        <table class="table table-dashed-borders table--second-level">
+                            <thead>
+                                <tr>
+                                    <th class="doc doc__query name"></th>
+                                    <th class="doc doc__query type"></th>
+                                    <th class="doc doc__query title"></th>
+                                    <th class="doc doc__query optional"></th>
+                                    <th class="doc doc__query description"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b class="doc">token</b></td>
+                                    <td>
+                                        <span class="doc doc--small">Type:</span> String
+                                    </td>
+                                    <td>
+                                        <span class="doc doc--small">Title:</span> Token Name
+                                    </td>
+                                    <td>
+                                        <span class="doc doc--small">Read only:</span> true
+                                    </td>
+                                    <td>
+                                        The non-stopword token name.
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><b class="doc">count</b></td>
+                                    <td>
+                                        <span class="doc doc--small">Type:</span> Integer
+                                    </td>
+                                    <td>
+                                        <span class="doc doc--small">Title:</span> Token Count
+                                    </td>
+                                    <td>
+                                        <span class="doc doc--small">Read only:</span> true
+                                    </td>
+                                    <td>
+                                        The frequency of the token in the original text.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b class="doc">embedding</b></td>
+                    <td>
+                        <span class="doc doc--small">Type:</span> Array
+                    </td>
+                    <td>
+                        <span class="doc doc--small">Title:</span> Text Embedding
+                    </td>
+                    <td>
+                        <span class="doc doc--small">Read only:</span> true
+                    </td>
+                    <td>
+                        An array of floats representing the text embedding.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b class="doc">text</b></td>
+                    <td>
+                        <span class="doc doc--small">Type:</span> Array
+                    </td>
+                    <td>
+                        <span class="doc doc--small">Title:</span> Source Text
+                    </td>
+                    <td>
+                        <span class="doc doc--small">Read only:</span> true
+                    </td>
+                    <td>
+                        The original source text.
+                    </td>
+                </tr>
+                -->
+
+                              </tbody>
+                          </table>
+                      </div>
+
+              </div>
 
 
       </div>

@@ -127,9 +127,12 @@ class DocumentSimilarity:
                 similarity between them.
         """
 
-        similarities = np.matmul(self.__embedding, emb)
-        res = [[self.__indices[i], ind, similarities[i]] for i in range(len(self.__indices))] + \
-              [[ind, self.__indices[i], similarities[i]] for i in range(len(self.__indices))]
+        if len(self.__embedding) > 0:
+            similarities = np.matmul(self.__embedding, emb)
+            res = [[self.__indices[i], ind, similarities[i]] for i in range(len(self.__indices))] + \
+                  [[ind, self.__indices[i], similarities[i]] for i in range(len(self.__indices))]
+        else:
+            res = []
         return res
 
     def new_document(self, ind, emb):
@@ -147,6 +150,9 @@ class DocumentSimilarity:
         """
 
         similarities = self.compute_similarities(ind, emb)
-        self.__embedding = np.vstack([self.__embedding, emb])
+        if len(self.__embedding) == 0:
+            self.__embedding = [emb]
+        else:
+            self.__embedding = np.vstack([self.__embedding, emb])
         self.__indices = self.__indices.append(ind)
         return similarities

@@ -31,7 +31,7 @@
 
           <div class="doc url_baseline p-4 mb-3">
             <p class="information">
-              <b class="doc">http://{{ result.host }}:{{ result.port }}/api/v1</b>
+              <b class="doc">http://{{ result.host }}:{{ result.port }}/api/v1/similarity</b>
             </p>
           </div>
 
@@ -154,6 +154,22 @@
               </thead>
               <tbody>
 
+                  <tr>
+                      <td><b class="doc">embedding</b></td>
+                      <td>
+                          <span class="doc doc--small">Type:</span> Array
+                      </td>
+                      <td>
+                          <span class="doc doc--small">Title:</span> Embedding
+                      </td>
+                      <td>
+                          <span class="doc doc--small">Read only:</span> true
+                      </td>
+                      <td>
+                          The embedding of the new document.
+                      </td>
+                  </tr>
+
                 <tr>
                   <td><b class="doc">additional_similarities</b></td>
                   <td>
@@ -169,6 +185,75 @@
                    A matrix of similarities between the new document and all the documents in the database with known embeddings.
                   </td>
                 </tr>
+
+                  <tr class="no-top-border">
+                      <td colspan="5">
+
+                          <b class="doc">additional_similarities object properties</b>
+
+                          <table class="table table-dashed-borders table--second-level">
+                              <thead>
+                                  <tr>
+                                      <th class="doc doc__query name"></th>
+                                      <th class="doc doc__query type"></th>
+                                      <th class="doc doc__query title"></th>
+                                      <th class="doc doc__query optional"></th>
+                                      <th class="doc doc__query description"></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td><b class="doc">doc1_id</b></td>
+                                      <td>
+                                          <span class="doc doc--small">Type:</span> Integer
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Title:</span> 1st document ID
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Read only:</span> true
+                                      </td>
+                                      <td>
+                                          The ID of one of the documents.
+                                      </td>
+                                  </tr>
+
+                                  <tr>
+                                      <td><b class="doc">doc2_id</b></td>
+                                      <td>
+                                          <span class="doc doc--small">Type:</span> Integer
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Title:</span> 2nd document ID
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Read only:</span> true
+                                      </td>
+                                      <td>
+                                          The ID of one of the documents.
+                                      </td>
+                                  </tr>
+
+                                  <tr>
+                                      <td><b class="doc">similarity</b></td>
+                                      <td>
+                                          <span class="doc doc--small">Type:</span> Float
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Title:</span> Similarity
+                                      </td>
+                                      <td>
+                                          <span class="doc doc--small">Read only:</span> true
+                                      </td>
+                                      <td>
+                                          The similarity score between documents with IDs "doc1_id" and "doc2_id".
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+
+                      </td>
+                  </tr>
 
                 <tr>
                   <td><b class="doc">finish</b></td>
@@ -406,7 +491,7 @@
                               <tr class="no-top-border">
                                   <td colspan="5">
 
-                                      <b class="doc">tokens object properties</b>
+                                      <b class="doc">similar_documents object properties</b>
 
                                       <table class="table table-dashed-borders table--second-level">
                                           <thead>

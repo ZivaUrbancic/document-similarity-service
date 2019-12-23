@@ -6,7 +6,6 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 import requests
-import json
 
 #################################################
 # Initialize the models
@@ -14,9 +13,6 @@ import json
 
 from ..library.document_similarity import DocumentSimilarity
 from ..library.postgresql import PostgresQL
-
-
-user_message = "Everything went fine. Enjoy using our service."
 
 
 # GET MODEL PARAMETERS FROM THE .config FILE
@@ -105,17 +101,25 @@ def update_similarities():
         additional_similarities = similarity.new_document(doc_id, new_embedding)
 
         # insert a new embedding into the database
-        # pg.execute("""
-        #     INSERT INTO embeddings
-        #     VALUES ({}, {})
-        #     """.format(doc_id, new_embedding))
+        try:
+            pg.execute("""
+                INSERT INTO document_embeddings
+                VALUES ({}, ARRAY{});
+                """.format(doc_id, new_embedding))
+            pg.commit()
+        except Exception as e:
+            return abort(400, "Could not add the new embedding into the table 'document_embeddings'. " + str(e))
 
-        # # insert similarities into the database
-        # for i, j, sim in additional_similarities:
-        #     pg.execute("""
-        #         INSERT INTO similarities
-        #         VALUES ({}, {}, {})
-        #         """.format(i, j, sim))
+        # insert similarities into the database
+        try:
+            for i, j, sim in additional_similarities:
+                pg.execute("""
+                    INSERT INTO similarities
+                    VALUES ({}, {}, {});
+                    """.format(i, j, sim))
+                pg.commit()
+        except Exception as e:
+            return abort(400, "Could not add the additional similarities into the table 'similarities'. " + str(e))
 
         finish = True
     except Exception as e:
@@ -124,13 +128,14 @@ def update_similarities():
         return abort(400, str(e))
     else:
         # TODO: return the response
-        additional_similarities = "TODO"
+        # additional_similarities = "TODO"
         return jsonify({
             "embedding": new_embedding,
             "additional similarities": additional_similarities,
             "indices": indices,
             "finish": finish
         })
+            # "indices": indices,
 
 @bp.route('/get_similarities', methods=['GET', 'POST'])
 def get_similarities():
@@ -156,11 +161,12 @@ def get_similarities():
         # get only the lines in table 'similarities' where the first document has id doc_id
         # sort them by the similarity column, descending
         similarity_list = pg.execute("""
-            SELECT document2_id FROM similarities
+            SELECT document2_id, similarity_score FROM similarities
             WHERE document1_id = {}
             ORDER BY similarity_score DESC;
             """.format(doc_id))
         result_indices = [entry['document2_id'] for entry in similarity_list[:k]]
+        result = [(entry['document2_id'], entry['similarity_score']) for entry in similarity_list[:k]]
         finish = True
     except Exception as e:
         # TODO: log exception
@@ -169,6 +175,6 @@ def get_similarities():
     else:
         return jsonify({
             "similar_documents": result_indices,
-            "length_similarity_list": len(similarity_list),
+            "similarities": result,
             "finish": finish
         })

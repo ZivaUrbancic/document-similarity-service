@@ -65,9 +65,17 @@ class PostgresQL:
             raise Exception("The connection is not established")
         else:
             self.cursor.execute(statement)
-            num_fields = len(self.cursor.description)
-            field_names = [i[0] for i in self.cursor.description]
-            return [{ field_names[i]: row[i] for i in range(num_fields) } for row in self.cursor.fetchall()]
+            if self.cursor.description is not None:
+                num_fields = len(self.cursor.description)
+                field_names = [i[0] for i in self.cursor.description]
+                return [{ field_names[i]: row[i] for i in range(num_fields) } for row in self.cursor.fetchall()]
+            else:
+                return None
+
+    def commit(self):
+        if self.connection:
+            self.connection.commit()
+            print("The changes have been commited.")
 
 
     # TODO: add project specific routes

@@ -1,6 +1,5 @@
-# Python Microservice Template
-This repository is intended as a template for microservices developed in the Python
-programming language.
+# Python Microservice for Document Comparison
+This repository is a functional microservice that enables the search for similar documents in a database.
 
 ## Prerequisites
 
